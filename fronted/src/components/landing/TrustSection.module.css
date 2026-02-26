@@ -1,0 +1,134 @@
+.section {
+  padding: var(--s-128) var(--s-48);
+  background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-dark) 100%);
+  overflow: hidden;
+  position: relative;
+}
+
+.glow {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 400px;
+  background: radial-gradient(ellipse at center top, rgba(0,240,255,0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--s-80);
+  position: relative;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  display: block;
+  margin-bottom: var(--s-16);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  color: var(--t-100);
+  margin-bottom: var(--s-16);
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--t-45);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.72;
+}
+
+/* ── Trust grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-20);
+  max-width: 1100px;
+  margin: 0 auto var(--s-64);
+  position: relative;
+}
+
+.card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-20);
+  padding: var(--s-40) var(--s-32);
+  text-align: center;
+  transition:
+    transform var(--t2) var(--ease-spring),
+    border-color var(--t2) var(--ease),
+    box-shadow var(--t2) var(--ease);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: var(--cyan-35);
+  box-shadow: var(--glow-cyan);
+}
+
+.iconBig {
+  font-size: 2.4rem;
+  margin-bottom: var(--s-16);
+  display: block;
+  filter: drop-shadow(0 0 12px rgba(0,240,255,0.4));
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--t-100);
+  margin-bottom: var(--s-12);
+}
+
+.cardDesc {
+  font-size: 0.875rem;
+  color: var(--t-45);
+  line-height: 1.68;
+}
+
+/* ── Compliance bar ── */
+.badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-16);
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-full);
+  padding: 10px 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--t-70);
+  transition: border-color var(--t1) var(--ease), color var(--t1) var(--ease);
+}
+
+.badge:hover {
+  border-color: var(--cyan-35);
+  color: var(--cyan);
+}
+
+.badgeIcon { font-size: 14px; }
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; }
+  .section { padding: var(--s-80) var(--s-20); }
+}

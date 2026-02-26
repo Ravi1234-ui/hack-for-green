@@ -1,0 +1,385 @@
+/* ══════════════════════════════════════
+   VIDEO FRAME — Holographic Container
+══════════════════════════════════════ */
+
+/* ── Keyframes local to this component ── */
+@keyframes vfPulseGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 40px rgba(0, 240, 255, 0.22),
+      0 0 80px rgba(0, 240, 255, 0.08),
+      inset 0 0 20px rgba(255, 255, 255, 0.04);
+  }
+  50% {
+    box-shadow:
+      0 0 60px rgba(0, 240, 255, 0.38),
+      0 0 120px rgba(0, 240, 255, 0.14),
+      inset 0 0 30px rgba(255, 255, 255, 0.06);
+  }
+}
+
+@keyframes vfFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes vfSweep {
+  0%   { left: -70%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { left: 120%; opacity: 0; }
+}
+
+@keyframes vfScan {
+  0%   { top: -2%; opacity: 0; }
+  5%   { opacity: 0.5; }
+  95%  { opacity: 0.5; }
+  100% { top: 102%; opacity: 0; }
+}
+
+@keyframes vfStatusBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+@keyframes vfRingPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.35; }
+  50%       { transform: translate(-50%, -50%) scale(1.04); opacity: 0.6; }
+}
+
+/* ══════════════════════════════════════
+   OUTER WRAPPER
+══════════════════════════════════════ */
+.outer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  animation: vfFadeIn 0.6s cubic-bezier(0, 0, 0.2, 1) 0.2s both;
+}
+
+/* ── Corner bracket decorations ── */
+.corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.cornerTL { top: 36px;  left: -2px;  border-top: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+.cornerTR { top: 36px;  right: -2px; border-top: 2px solid var(--cyan); border-right: 2px solid var(--cyan); }
+.cornerBL { bottom: 36px; left: -2px;  border-bottom: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+.cornerBR { bottom: 36px; right: -2px; border-bottom: 2px solid var(--cyan); border-right: 2px solid var(--cyan); }
+
+/* ══════════════════════════════════════
+   HUD TOP BAR
+══════════════════════════════════════ */
+.hudBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: rgba(0, 240, 255, 0.04);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-bottom: none;
+  border-radius: 14px 14px 0 0;
+}
+
+.hudBarLeft {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.hudDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(0, 240, 255, 0.25);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+}
+
+.hudLabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(0, 240, 255, 0.55);
+}
+
+.hudBarRight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statusPip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00ffb3;
+  box-shadow: 0 0 8px #00ffb3;
+  animation: vfStatusBlink 2.5s ease-in-out infinite;
+}
+
+.statusText {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: #00ffb3;
+}
+
+/* ══════════════════════════════════════
+   MAIN GLASS FRAME
+══════════════════════════════════════ */
+.frame {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  cursor: default;
+}
+
+.frame:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* Outer glow ring — sits behind the glass */
+.glowRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% + 24px);
+  height: calc(100% + 24px);
+  border-radius: 30px;
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  pointer-events: none;
+  animation: vfRingPulse 4s ease-in-out infinite;
+  z-index: 0;
+}
+
+/* ── Glass Container ── */
+.glass {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(0, 240, 255, 0.40);
+  box-shadow:
+    0 0 40px rgba(0, 240, 255, 0.25),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  z-index: 1;
+  animation: vfPulseGlow 5s ease-in-out infinite;
+}
+
+/* top edge highlight */
+.glass::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.7), transparent);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ── Video ── */
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
+}
+
+/* ── Dark Gradient Overlay ── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(7, 26, 47, 0.55),
+    rgba(7, 26, 47, 0.35)
+  );
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 2;
+}
+
+/* ── Light Sweep ── */
+.sweep {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.04),
+    transparent
+  );
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 3;
+  animation: vfSweep 7s ease-in-out infinite 3s;
+}
+
+/* ── Horizontal Scan Line ── */
+.scanLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), transparent);
+  pointer-events: none;
+  z-index: 4;
+  animation: vfScan 6s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════
+   HUD OVERLAY ELEMENTS
+══════════════════════════════════════ */
+.hudOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+/* ── Top-left data badge ── */
+.dataBadge {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: rgba(7, 26, 47, 0.65);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  border-radius: 10px;
+  padding: 9px 14px;
+  width: fit-content;
+  backdrop-filter: blur(8px);
+}
+
+.badgeLabel {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0, 240, 255, 0.55);
+}
+
+.badgeValue {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--cyan);
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+}
+
+/* ── Bottom stat bar ── */
+.bottomBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: rgba(7, 26, 47, 0.70);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 12px;
+  padding: 12px 20px;
+  backdrop-filter: blur(12px);
+}
+
+.bottomStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.bsVal {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cyan);
+}
+
+.bsKey {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(240, 248, 255, 0.4);
+}
+
+.bottomDivider {
+  width: 1px;
+  height: 30px;
+  background: rgba(0, 240, 255, 0.15);
+}
+
+/* ══════════════════════════════════════
+   FOOTER STRIP
+══════════════════════════════════════ */
+.footerStrip {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: rgba(0, 240, 255, 0.03);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+}
+
+.footerMono {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(0, 240, 255, 0.35);
+}
+
+.footerPing {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 0 6px rgba(0, 240, 255, 0.4);
+  animation: vfStatusBlink 3s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .frame { height: 50vh; min-height: 320px; }
+}
+
+@media (max-width: 600px) {
+  .frame { height: 50vh; min-height: 280px; }
+  .bottomBar { gap: 12px; padding: 10px 14px; }
+  .bsVal { font-size: 12px; }
+  .outer { width: 100%; }
+}

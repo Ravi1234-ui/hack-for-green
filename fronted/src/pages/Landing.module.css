@@ -1,0 +1,40 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg-void);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s-24) var(--s-48);
+  border-top: 1px solid var(--glass-border);
+  background: var(--bg-void);
+  flex-wrap: wrap;
+  gap: var(--s-16);
+}
+
+.footerBrand {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--cyan);
+  letter-spacing: 0.04em;
+}
+
+.footerMid {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--t-25);
+  letter-spacing: 0.08em;
+}
+
+.footerRight {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--t-25);
+}
+
+@media (max-width: 640px) {
+  .footer { padding: var(--s-20); justify-content: center; text-align: center; }
+}
